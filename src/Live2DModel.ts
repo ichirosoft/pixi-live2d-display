@@ -196,12 +196,13 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
      * @param group - The motion group.
      * @param index - The index in this group. If not presented, a random motion will be started.
      * @param priority - The motion priority. Defaults to `MotionPriority.NORMAL`.
+     * @param loop - loop motion
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    motion(group: string, index?: number, priority?: MotionPriority): Promise<boolean> {
+    motion(group: string, index?: number, priority?: MotionPriority, loop: boolean = true): Promise<boolean> {
         return index === undefined
             ? this.internalModel.motionManager.startRandomMotion(group, priority)
-            : this.internalModel.motionManager.startMotion(group, index, priority);
+            : this.internalModel.motionManager.startMotion(group, index, priority, loop);
     }
 
     /**
@@ -399,7 +400,7 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
 
     /**
      * Destroys the model and all related resources. This takes the same options and also
-     * behaves the same as `PIXI.Container#destroy`.
+     * behaves the same as `PIXI.Container#　`.
      * @param options - Options parameter. A boolean will act as if all options
      *  have been set to that value
      * @param [options.children=false] - if set to true, all the children will have their destroy

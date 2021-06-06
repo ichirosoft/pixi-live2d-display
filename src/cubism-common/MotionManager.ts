@@ -204,9 +204,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
      * @param group - The motion group.
      * @param index - Index in the motion group.
      * @param priority - The priority to be applied.
+     * @param loop - loop motion
      * @return Promise that resolves with true if the motion is successfully started, with false otherwise.
      */
-    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL): Promise<boolean> {
+    async startMotion(group: string, index: number, priority = MotionPriority.NORMAL, loop: boolean = true): Promise<boolean> {
         if (!this.state.reserve(group, index, priority)) {
             return false;
         }
@@ -243,7 +244,10 @@ export abstract class MotionManager<Motion = any, MotionSpec = any> extends Even
             }
         }
 
-        const motion = await this.loadMotion(group, index);
+        const motion:Motion|undefined = await this.loadMotion(group, index);
+
+        // @ts-ignore
+        motion.setIsLoop( loop );
 
         if (audio) {
             const readyToPlay = SoundManager.play(audio)
