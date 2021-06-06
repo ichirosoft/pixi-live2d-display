@@ -205,6 +205,10 @@ export class Live2DModel<IM extends InternalModel = InternalModel> extends Conta
             : this.internalModel.motionManager.startMotion(group, index, priority, loop);
     }
 
+    stopMotion():void {
+        this.internalModel.motionManager.stopAllMotions();
+    }
+
     /**
      * Shorthand to set an expression.
      * @param id - Either the index, or the name of the expression. If not presented, a random expression will be set.
